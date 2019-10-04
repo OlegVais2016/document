@@ -28,7 +28,8 @@ public class DocumentController {
     public DocumentCreateResponse getById(@PathVariable("id") Long id) {
         return createDocumentService.getById(id);
     }
-    @PostMapping("/update/{id}")
+
+    @PutMapping("/save/{id}")
     public DocumentCreateResponse update(@PathVariable Long id,
                                         @RequestBody DocumentCreateRequest documentCreateRequest){
         return createDocumentService.updateDocument(id, documentCreateRequest);

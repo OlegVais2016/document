@@ -8,6 +8,7 @@ import com.example.demo.service.CreateDocumentService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -32,15 +33,26 @@ public class CreateDocumentTest {
 
     @Test
     public void creation_positive(){
+        Mockito.when(documentRepository.save(ArgumentMatchers
+                .any(Document.class))).thenReturn(DEFAULT_DOCUMENT);
         DocumentCreateRequest request = DocumentCreateRequest.builder()
-                .key1(CORRECT_KEY1)
-                .key2(CORRECT_KEY2)
+                .key1(DEFAULT_DOCUMENT.getKey1())
+                .key2(DEFAULT_DOCUMENT.getKey2())
                 .build();
-        Mockito.lenient().when(documentRepository.findByKey1(CORRECT_KEY1))
-                .thenReturn(DEFAULT_DOCUMENT);
         DocumentCreateResponse response = createDocumentService.saveDocument(request);
         Assert.assertNotNull(response.getKey1());
         Assert.assertEquals(response.getKey1(),DEFAULT_DOCUMENT.getKey1());
     }
-
 }
+
+
+
+//        DocumentCreateRequest request = DocumentCreateRequest.builder()
+//                .key1(CORRECT_KEY1)
+//                .key2(CORRECT_KEY2)
+//                .build();
+//        Mockito.lenient().when(documentRepository.findByKey1(CORRECT_KEY1))
+//                .thenReturn(DEFAULT_DOCUMENT);
+//        DocumentCreateResponse response = createDocumentService.saveDocument(request);
+//        Assert.assertNotNull(response.getKey1());
+//        Assert.assertEquals(response.getKey1(),DEFAULT_DOCUMENT.getKey1());
